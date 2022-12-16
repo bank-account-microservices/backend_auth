@@ -1,0 +1,16 @@
+Django==3.2.9
+djangorestframework==3.12.4
+djangorestframework-simplejwt==5.0.0
+django-cors-headers==3.10.0  # Componente lógico es desactivado ya que no es necedario que el usuario no requiere aceeder a este desde el navegador web.
+                                #Solo tendrá acceso al API Gateway
+
+psycopg2-binary==2.9.2
+PyJWT == 2.1.0      # Compatibilidad con versión de Heroku
+gunicorn == 20.1.0 #Instalaciones para Docker
+django-heroku == 0.3.1
+
+
+#Primera configuración. Ver clase 8 de noviembre
+
+#Se borró el modelo de cuenta porque Django se usa solo para autenticación con usuario. Se borra la importación de la cuenta en el init.
+#Igual con el serializer
