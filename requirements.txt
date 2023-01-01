@@ -1,7 +1,7 @@
 Django==3.2.9
 djangorestframework==3.12.4
 djangorestframework-simplejwt==5.0.0
-django-cors-headers==3.10.0  # Componente lógico es desactivado ya que no es necedario que el usuario no requiere aceeder a este desde el navegador web.
+#django-cors-headers==3.10.0  # Componente lógico es desactivado ya que no es necesario que el usuario acceda  al backend desde el navegador web.
                                 #Solo tendrá acceso al API Gateway
 
 psycopg2-binary==2.9.2

@@ -6,7 +6,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend_auth_example.settings_prod') # Se ajusta el settings_prod en este archivo para producción
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend_auth_example.settings_dev') # el settings.py es solo para desarrollo y trabajo local
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
