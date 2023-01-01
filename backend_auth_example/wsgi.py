@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend_auth_example.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend_auth_example.settings_prod') #Se ajusta el settings que se quiera correr
 
 application = get_wsgi_application()

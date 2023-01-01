@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CORS_ALLOW_ALL_ORIGINS = True # Clase 8 nov. Luego se agrega el listado de frontends desde donde se puede conectar al backend
+#CORS_ALLOW_ALL_ORIGINS = True # Clase 8 nov. Luego se agrega el listado de frontends desde donde se puede conectar al backend
 
 # Application definition
 
@@ -41,14 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'auth_example', # #Se agrega la app creada desde GIT. Clase 8 de noviembre 
     'rest_framework', # Agragada
-    'corsheaders', # Agragada, luego deshabilitada. Todo lo de cors se saca para microservicios
+    #'corsheaders', # Agragada (qué fronts se pueden conectar al backend), luego deshabilitada. Todo lo de cors se saca para microservicios
+                        # porque esta validación la hará el API Gateway
 ]
 
-SIMPLE_JWT = {  # Clase 8 de nov
+SIMPLE_JWT = {  # Clase 8 de nov   ---- JWT JSON Web Token
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15), # Reducir a 5 luego de las pruebas en postman esta duración del token
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), # Los siguientes se dejan como en las guias
     'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': False, # En principio estaba en True para microservicios
+    'BLACKLIST_AFTER_ROTATION': False, # En principio estaba en True. Para microservicios se generan demasiados por tanta concurrencia, por eso cambia a False
     'UPDATE_LAST_LOGIN': False,
     'ALGORITHM': 'HS256',
     'USER_ID_FIELD': 'id',
@@ -63,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware', # Clase 8 nov. Se agregó en INSTALLED_APPS y luego se borra
+    #'corsheaders.middleware.CorsMiddleware', # Clase 8 nov. Se agregó en INSTALLED_APPS y luego se borra
 ]
 
 REST_FRAMEWORK = {    #Clase 8 nov.
@@ -75,6 +77,7 @@ REST_FRAMEWORK = {    #Clase 8 nov.
     )
 }
 
+AUTH_USER_MODEL = 'auth_example.User' # Clase 9 Nov. A dónde dirigirse para encontrar el modelo que está autenticando y comparar
 ROOT_URLCONF = 'backend_auth_example.urls'
 
 TEMPLATES = [
@@ -99,10 +102,14 @@ WSGI_APPLICATION = 'backend_auth_example.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+DATABASES = { # Clase 9 Nov. config base de datos local gestionada en TablePlus
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE'    : 'django.db.backends.postgresql_psycopg2',
+        'NAME'      : 'auth_ms',
+        'USER'      : 'postgres',
+        'PASSWORD'  : 'nicopostgres',
+        'HOST'      : 'localhost',
+        'PORT'      : '5432',
     }
 }
 
